@@ -1,0 +1,1 @@
+export const VendingMachine = () => <>Welcome to the vending machine!</>
