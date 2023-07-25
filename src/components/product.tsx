@@ -1,39 +1,24 @@
+import { FC } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
+import { ProductType, UserProfileType, CashType } from '../types';
 
 
-interface ProductType {
-	title: string;
-	price: number;
-	stock: number;
-}
-
-interface CashType {
-	amount: number;
-}
-
-interface UserType {
-	id: string;
-	name: string;
-
-}
-
-
-export const Product = ({ title, price, stock }: ProductType) => {
+export const Product = ({ name, price, quantity }: ProductType) => {
 	return (
 		<Grid item xs={4} md={4}>
 			<Box>
-				<Box sx={{fontSize: 21, fontWeight: 800 }}>{title}</Box>
-				<Box>Stock: {stock}€</Box>
-				<Box>Price: {price}€</Box>
+				<Box sx={{fontSize: 21, fontWeight: 800 }}>{name || "Empty :("}</Box>
+				<Box>Stock: {quantity || "---"} €</Box>
+				<Box>Price: {price || "---"} €</Box>
 				<Button>Buy</Button>
 			</Box>
 		</Grid>
 	)
 }
 
-export const UserDisplay = ({ id, name}: UserType) => {
+export const UserDisplay = ({ name }: UserProfileType) => {
 	return (
 		<Grid item xs={12}>
 			{name}
@@ -41,7 +26,7 @@ export const UserDisplay = ({ id, name}: UserType) => {
 	)	
 }
 
-export const AddMoneyButton = ({amount}: CashType) => {
+export const AddMoneyButton = ({ amount }: CashType) => {
 	return (
 		<Grid item xs={4} md={4}>
 			<Button>{amount} €</Button>
@@ -64,10 +49,10 @@ export const AddMoney = () =>{
 	
 }
 
-export const BalanceDisplay = ({amount}: CashType) => {
+export const BalanceDisplay = ({ balance}: UserProfileType) => {
 	return (
 		<Grid item xs={12}>
-			{ amount } €
+			{ balance } €
 		</Grid>
 	)
 }
@@ -82,31 +67,18 @@ export const RefundMoneyButton = () =>{
 
 
 
-export const Products = () => {
+export const Products: FC<{products: ProductType[]}> = ({products}) => {
 	return (
 		<Grid container spacing={2}>
 			<Grid container item xs={12} md={8}>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
-				<Product title='Redbull' price={5} stock={7} />
-				<Product title='Fanta' price={3} stock={7}/>
+				<>
+				{products.map((x, index) => (<Product key={index} name={x.name} price={x.price} quantity={x.quantity}/>))}
+				</>
 			</Grid>
 			<Grid container item xs={12} md={4}>
-				<UserDisplay id="000" name="Demo User"/>
+				<UserDisplay balance={13.7} id="" name=""/>
 				<AddMoney />
-				<BalanceDisplay amount={13.7}/>
+				<BalanceDisplay balance={13.7} id="" name=""/>
 				<RefundMoneyButton />
 			</Grid>
 		</Grid>

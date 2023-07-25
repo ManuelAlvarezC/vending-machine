@@ -1,17 +1,47 @@
-import { FC } from 'react';
-
+import { FC, useState, useEffect } from 'react';
 import { Products } from '../components/product';
 import { Navigate } from 'react-router-dom';
+import { api } from '../api';
+import  { ProductType } from '../types';
 
 
-export const VendingMachine: FC = () => {
+
+export const VendingMachine: FC<{ url: string }> = (url) => {
 	const user = true; // TODO connect to the redux store and retrieve the user name
+	const [products, setProducts] = useState<ProductType[]>([]);
+	const [isLoading, setLoading] = useState(false);
+	const [error, setError] = useState<any>(null);
+
+	useEffect(() => {
+		const fetchProducts = async () => {
+			try {
+				setLoading(true);
+				const response = await api.getProducts();
+				if (response?.data){
+					setProducts(response?.data);
+				}
+				
+				} catch (error) {
+					setError(error);
+				} finally {
+					setLoading(false);
+				}
+		};
 	
-	  // if no user, redirect to login
+		fetchProducts();
+	  }, [url]);
+	
+	  if (isLoading) {
+		return <div>Loading...</div>;
+	  }
+	
+	  if (error) {
+		return <div>Error: {error.message}</div>;
+	  }
+	
 	if (!user) {
 		  return <Navigate to='/' />
 	  }
   
-	  // user is logged in
-	  return <Products />
+	  return <Products products={products} />
   }

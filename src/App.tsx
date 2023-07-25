@@ -7,7 +7,7 @@ function App() {
 	<BrowserRouter>
 		<Routes>
 			<Route path="/" element={<Login />} />
-			<Route path="/vending-machine" element={<VendingMachine />} />
+			<Route path="/vending-machine" element={<VendingMachine url="/vending-machine" />} />
 			<Route path="*" element={<NotFound />} />
 		</Routes>
 	</BrowserRouter>
