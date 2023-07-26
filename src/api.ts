@@ -1,14 +1,20 @@
 import Axios from 'axios';
-import { ProductType } from './types';
+import { ProductType, UserProfileType } from './types';
 
 export interface GetProductsResponse {
     data: ProductType[]
 }
 
+export interface LoginResponse {
+    data: UserProfileType
+}
+
+Axios.defaults.withCredentials = true;
+
+
+
 const getProducts = async (): Promise<GetProductsResponse | undefined> => {
     try {
-        console.log(process.env.REACT_APP_BACKEND_URL)
-        console.log(process.env.REACT_APP_BACKEND_URL + '/products')
         const response = await Axios.get(process.env.REACT_APP_BACKEND_URL + '/products');
         return response;
       } catch (err) {
@@ -18,9 +24,17 @@ const getProducts = async (): Promise<GetProductsResponse | undefined> => {
       }
 } 
 
-const postLogin = async (): Promise<GetProductsResponse | undefined> => {
+const postLogin = async (username: string): Promise<LoginResponse | undefined> => {
     try {
-        const response = await Axios.get(process.env.REACT_APP_BACKEND_URL + '/products');
+        const data = {user_name: username} 
+        const response = await Axios.post(process.env.REACT_APP_BACKEND_URL + 'login', data, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+            }
+        });
         return response;
     } catch (err) {
         console.log(err)
@@ -32,5 +46,4 @@ const postLogin = async (): Promise<GetProductsResponse | undefined> => {
 export const api = {
     getProducts,
     postLogin
-      
 }

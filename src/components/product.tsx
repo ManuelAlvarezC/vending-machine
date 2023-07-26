@@ -18,10 +18,10 @@ export const Product = ({ name, price, quantity }: ProductType) => {
 	)
 }
 
-export const UserDisplay = ({ name }: UserProfileType) => {
+export const UserDisplay = ({ user_name }: UserProfileType) => {
 	return (
 		<Grid item xs={12}>
-			{name}
+			{user_name}
 		</Grid>
 	)	
 }
@@ -76,9 +76,9 @@ export const Products: FC<{products: ProductType[]}> = ({products}) => {
 				</>
 			</Grid>
 			<Grid container item xs={12} md={4}>
-				<UserDisplay balance={13.7} id="" name=""/>
+				<UserDisplay balance={13.7} id="" user_name=""/>
 				<AddMoney />
-				<BalanceDisplay balance={13.7} id="" name=""/>
+				<BalanceDisplay balance={13.7} id="" user_name=""/>
 				<RefundMoneyButton />
 			</Grid>
 		</Grid>

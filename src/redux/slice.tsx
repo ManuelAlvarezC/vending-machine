@@ -2,29 +2,29 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface VendingMachineState {
-  name: string | null;
-	balance: number | null;
+  name: string;
+	balance: number;
 }
 
 const initialState: VendingMachineState = {
-  name: null,
-	balance: null
+  name: "",
+	balance: 0
 }
 
 export const vendingMachineSlice = createSlice({
   name: 'vendingMachine',
   initialState,
   reducers: {
-    updateBalance: (state, action: PayloadAction<number | null>) => {
+    setBalance: (state, action: PayloadAction<number>) => {
       state.balance = action.payload
     },
-    setName: (state, action: PayloadAction<string | null>) => {
+    setName: (state, action: PayloadAction<string>) => {
 			state.name = action.payload
     }
   }
 })
 
 
-export const { updateBalance, setName } = vendingMachineSlice.actions
+export const { setBalance, setName } = vendingMachineSlice.actions
 
 export default vendingMachineSlice.reducer

@@ -10,7 +10,7 @@ export interface CashType {
 
 export interface UserProfileType {
 	id: string;
-	name: string;
+	user_name: string;
     balance: number
 
 }
